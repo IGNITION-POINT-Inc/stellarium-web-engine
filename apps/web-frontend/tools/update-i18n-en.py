@@ -8,7 +8,7 @@
 # The terms of the AGPL v3 license can be found in the main directory of this
 # repository.
 
-# Update the english translation file in web-engine/src/locale/en.json
+# Update the english translation file in web-engine/src/locale/ja.json
 # This file can be used as a base for translation in other laguages
 
 import os
@@ -30,7 +30,7 @@ def update_tr(src_path, locales_path, exclude_path=None):
 
     trs = {}
     # Loads existing english translations
-    with open(locales_path + '/en.json') as tr_file:
+    with open(locales_path + '/ja.json') as tr_file:
         trs = json.load(tr_file)
 
     for tr in [x for x in report['missingKeys'] if x['language'] == 'en']:
@@ -42,7 +42,7 @@ def update_tr(src_path, locales_path, exclude_path=None):
         trs[key] = key
 
     # Saves new version
-    with open(locales_path + '/en.json', 'w') as tr_file:
+    with open(locales_path + '/ja.json', 'w') as tr_file:
         json.dump(trs, tr_file, ensure_ascii=False, indent=2)
     os.remove("i18n-report.json")
 
