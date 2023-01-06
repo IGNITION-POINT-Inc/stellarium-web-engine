@@ -11,6 +11,10 @@
   <v-card v-if="$store.state.showDataCreditsDialog">
     <v-card-title><div class="text-h5">Data Credits</div></v-card-title>
     <v-card-text style="height: 600px;">
+      <h3>Stellarium Web</h3>
+      <p>
+        <a href="https://github.com/IGNITION-POINT-Inc/stellarium-web-engine">https://github.com/IGNITION-POINT-Inc/stellarium-web-engine</a> forked from <a href="https://github.com/Stellarium/stellarium-web-engine">https://github.com/Stellarium/stellarium-web-engine</a>
+      </p>
       <h3>Stars</h3>
       <p>Combination of the following catalogues:
         <ul class="data-credits">

@@ -303,7 +303,7 @@ export default {
       }
       const ly = d * swh.astroConstants.ERFA_AULT / swh.astroConstants.ERFA_DAYSEC / swh.astroConstants.ERFA_DJY
       if (ly >= 0.1) {
-        return ly.toFixed(2) + '<span class="radecUnit"> light years</span>'
+        return ly.toFixed(2) + '<span class="radecUnit"> 光年</span>'
       }
       if (d >= 0.1) {
         return d.toFixed(2) + '<span class="radecUnit"> AU</span>'
