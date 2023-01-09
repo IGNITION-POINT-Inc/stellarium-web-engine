@@ -1,6 +1,6 @@
 module.exports = {
   runtimeCompiler: true,
-  publicPath: process.env.CDN_ENV ? process.env.CDN_ENV : '/',
+  publicPath: process.env.CDN_ENV ? process.env.CDN_ENV : '/stellarium/',
 
   chainWebpack: config => {
     // workaround taken from webpack/webpack#6642
@@ -30,8 +30,8 @@ module.exports = {
 
   pluginOptions: {
     i18n: {
-      locale: 'en',
-      fallbackLocale: 'en',
+      locale: 'ja',
+      fallbackLocale: 'ja',
       localeDir: 'locales',
       enableInSFC: true
     }
