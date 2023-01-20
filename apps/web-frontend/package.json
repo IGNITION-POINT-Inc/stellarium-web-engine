@@ -13,6 +13,7 @@
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "core-js": "^3.4.4",
+    "gsap": "^3.11.4",
     "leaflet": "^1.7.1",
     "leaflet-control-geocoder": "^1.13.0",
     "moment": "^2.29.4",

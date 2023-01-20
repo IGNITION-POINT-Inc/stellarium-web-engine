@@ -54,6 +54,7 @@
   </v-navigation-drawer>
 
   <v-main>
+    <HoshizoraHeader></HoshizoraHeader>
     <v-container class="fill-height" fluid style="padding: 0">
       <div id="stel" v-bind:class="{ right_panel: $store.state.showSidePanel }">
         <div style="position: relative; width: 100%; height: 100%">
@@ -75,6 +76,7 @@ import Gui from '@/components/gui.vue'
 import GuiLoader from '@/components/gui-loader.vue'
 import swh from '@/assets/sw_helpers.js'
 import Moment from 'moment'
+import HoshizoraHeader from '@/components/HoshizoraHeader.vue'
 
 export default {
   data (context) {
@@ -93,7 +95,7 @@ export default {
       dataSourceInitDone: false
     }
   },
-  components: { Gui, GuiLoader },
+  components: { HoshizoraHeader, Gui, GuiLoader },
   methods: {
     getPluginsMenuItems: function () {
       let res = []

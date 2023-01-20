@@ -1,0 +1,49 @@
+$IMG: '../../assets/images/';
+
+
+$BASE_WIDTH:1080px;
+$BASE_HEIGHT:768px;
+$BASE_VW: 0.09765625;
+$BASE_VH: 0.1302083333333333;
+
+$maxW:1400px;
+$minW:960px;
+
+$mediaQuery-large: 960px;
+$mediaQuery-middle: 640px;
+$mediaQuery-small: 400px;
+
+$vw-640: 0.15625;
+$vw-750: 0.133333333;
+$vw-1000: 0.1;
+$vw-1200: 0.08333333;
+$vw-1400: 0.0714285;
+
+// ブランドカラー
+$COLOR_BASE: #2eb9b9;
+//$COLOR_BASE: #13A66F;
+$COLOR_FONT_BASE: #141417;
+$COLOR_FONT_link: #FFFFFF;
+$COLOR_FONT_Sublink: #999999;
+
+$COLOR_ERROR: #A70510;
+
+
+// フォント
+
+$FONT_FAMILY_BASE:'Noto Sans JP', メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+
+// フォントサイズ
+$FONT_SIZE: (14vw*$BASE_VW);
+
+// line-height
+$BASE_LINE_HEIGHT: 1.5;
+
+// マージン
+$MARGIN_BASE: 4px;
+
+// パディング
+$PADDING_BASE: 4px;
+$CONTENT_PADDING_SIDE: $PADDING_BASE * 5;
+$CONTENT_PADDING_SIDE_SP: $PADDING_BASE * 3;
+
