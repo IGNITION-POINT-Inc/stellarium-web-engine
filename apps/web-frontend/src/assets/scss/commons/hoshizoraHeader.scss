@@ -11,10 +11,10 @@
     .logo{
       position: relative;
       pointer-events: auto;
-      width: (220px);
-      height: (220px);
+      width: (180vw*$vw-750);
+      height: (180vw*$vw-750);
       background-color: #FFFFFF;
-      border-bottom-right-radius: (60px);
+      border-bottom-right-radius: (50vw*$vw-750);
       z-index: 10;
       a{
         display: block;
@@ -32,7 +32,7 @@
         right: 0;
         margin: auto;
         transform: translateY(-50%);
-        width: (200px);
+        width: (150vw*$vw-750);
         height: auto;
       }
     }

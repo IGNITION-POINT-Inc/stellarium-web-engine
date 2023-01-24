@@ -75,6 +75,8 @@ export default {
     },
     planetBackgroundStr: function (obj) {
       const d = new Date()
+      console.log("this.$stel.getObj('NAME Moon')")
+      console.log(this.$stel.getObj('NAME Moon'))
       d.setMJD(obj.computeVisibility()[0].rise)
       const rise = Moment.utc(d)
       rise.local()

@@ -8,7 +8,9 @@
 
 <template>
   <v-card v-if="selectedObject" transparent style="background: rgba(66, 66, 66, 0.3);">
-    <v-btn icon style="position: absolute; right: 0" v-on:click.native="unselect()"><v-icon>mdi-close</v-icon></v-btn>
+    <v-btn icon style="position: absolute; right: 0" v-on:click.native="unselect()">
+      <v-icon>mdi-close</v-icon>
+    </v-btn>
     <v-card-title primary-title>
       <div style="width: 100%">
         <img :src="icon" height="48" width="48" align="left" style="margin-top: 3px; margin-right: 10px"/>
@@ -18,15 +20,7 @@
         </div>
       </div>
     </v-card-title>
-    <v-card-text style="padding-bottom: 5px;">
-      <v-row v-if="otherNames.length > 1" style="width: 100%;">
-        <v-col cols="12">
-          <span style="position: absolute;">{{ $t('Also known as') }}</span><span style="padding-left: 33.3333%">&nbsp;</span><span class="text-caption white--text" v-for="mname in otherNames1to7" :key="mname" style="margin-right: 15px; font-weight: 500;">{{ mname }}</span>
-          <v-btn small icon class="grey--text" v-if="otherNames.length > 8" v-on:click.native="showMinorNames = !showMinorNames" style="margin-top: -5px; margin-bottom: -5px;"><v-icon>mdi-dots-horizontal</v-icon></v-btn>
-          <span class="text-caption white--text" v-for="mname in otherNames8andMore" :key="mname" style="margin-right: 15px; font-weight: 500">{{ mname }}</span>
-        </v-col>
-      </v-row>
-    </v-card-text>
+    <v-card-text style="padding-bottom: 5px;"></v-card-text>
     <v-card-text>
       <template v-for="item in items">
         <v-row style="width: 100%" :key="item.key" no-gutters>
@@ -34,7 +28,6 @@
           <v-col cols="8" style="font-weight: 500" class="white--text"><span v-html="item.value"></span></v-col>
         </v-row>
       </template>
-      <div style="margin-top: 15px" class="white--text" v-html="wikipediaSummary"></div>
     </v-card-text>
     <v-card-actions style="margin-top: -25px">
       <v-spacer/>
@@ -42,38 +35,6 @@
         <component :is="item" :key="item"></component>
       </template>
     </v-card-actions>
-    <v-dialog v-model="showShareLinkDialog" width="500px" absolute>
-      <v-card style="height: 180px" class="secondary white--text">
-        <v-card-title primary-title>
-          <div>
-            <h3 class="text-h5 mb-0">Share link</h3>
-          </div>
-        </v-card-title>
-        <v-card-text style="width:100%;">
-          <v-row style="width: 100%">
-            <v-text-field id="link_inputid" v-model="shareLink" label="Link" solo readonly></v-text-field>
-            <v-btn @click.native.stop="copyLink">Copy</v-btn>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <div v-if="$store.state.showSelectedInfoButtons" style="position: absolute; right: 0px; bottom: -50px;">
-      <v-btn v-if="!showPointToButton" fab small color="transparent" @click.native="showShareLinkDialog = !showShareLinkDialog">
-        <v-icon>mdi-link</v-icon>
-      </v-btn>
-      <v-btn v-if="showPointToButton" fab small color="transparent" v-on:click.native="lockToSelection()">
-        <img src="@/assets/images/svg/ui/point_to.svg" height="40px" style="min-height: 40px"></img>
-      </v-btn>
-      <v-btn v-if="!showPointToButton" fab small color="transparent" @mousedown="zoomOutButtonClicked()">
-        <img :class="{bt_disabled: !zoomOutButtonEnabled}" src="@/assets/images/svg/ui/remove_circle_outline.svg" height="40px" style="min-height: 40px"></img>
-      </v-btn>
-      <v-btn v-if="!showPointToButton" fab small color="transparent" @mousedown="zoomInButtonClicked()">
-        <img :class="{bt_disabled: !zoomInButtonEnabled}" src="@/assets/images/svg/ui/add_circle_outline.svg" height="40px" style="min-height: 40px"></img>
-      </v-btn>
-    </div>
-    <v-snackbar bottom left :timeout="2000" v-model="copied" color="secondary" >
-      Link copied
-    </v-snackbar>
   </v-card>
 </template>
 
@@ -81,6 +42,329 @@
 
 import Moment from 'moment'
 import swh from '@/assets/sw_helpers.js'
+
+const fullWordTranslation = new Map([
+  ['Small Magellanic Cloud', '小マゼラン雲'],
+  ['47 Tuc', 'きょしちょう座47']
+])
+
+const translation = new Map([
+  ['Sum', '太陽'],
+  ['Moon', '月'],
+  ['Mercury', '水星'],
+  ['Venus', '金星'],
+  ['Earth', '地球'],
+  ['Mars', '火星'],
+  ['Jupiter', '木星'],
+  ['Saturn', '土星'],
+  ['Uranus', '天王星'],
+  ['Neptune', '海王星'],
+  ['Pluto', '"冥王星'],
+  ['Sirius', 'シリウス'],
+  ['Canopus', 'カノープス'],
+  ['Arcturus', 'アークトゥルス'],
+  ['Rigil', 'リギル'],
+  ['Kentaurus', 'ケンタウルス'],
+  ['Vega', 'ベガ'],
+  ['Capella', 'カペラ'],
+  ['Rigel', 'リゲル'],
+  ['Procyon', 'プロキオン'],
+  ['Betelgeuse', 'ベテルギウス'],
+  ['Achernar', 'アケルナル'],
+  ['Hadar', 'ハダル'],
+  ['Acrux', 'アクルックス'],
+  ['Altair', 'アルタイル'],
+  ['Aldebaran', 'アルデバラン'],
+  ['Capella', 'カペラ'],
+  ['Antares', 'アンタレス'],
+  ['Spica', 'スピカ'],
+  ['Pollux', 'ポルックス'],
+  ['Fomalhaut', 'フォーマルハウト'],
+  ['Deneb', 'デネブ'],
+  ['Mimosa', 'ミモザ'],
+  ['Toliman', 'トリマン'],
+  ['Regulus', 'レグルス'],
+  ['Adara', 'アダーラ'],
+  ['Castor', 'カストル'],
+  ['Shaula', 'シャウラ'],
+  ['Gacrux', 'ガクルックス'],
+  ['Bellatrix', 'ベラトリックス'],
+  ['Elnath', 'エルナト'],
+  ['Miaplacidus', 'ミアプラキドゥス'],
+  ['Alnilam', 'アルニラム'],
+  ['Al Na\'ir', 'アルナイル'],
+  ['Al Suhail al-Muhlif', 'スハイル・ムーリフ、レゴール'],
+  ['Alioth', 'アリオト'],
+  ['Alnitak', 'アルニタク'],
+  ['Dubhe', 'ドゥーベ'],
+  ['Mirfak', 'ミルファク'],
+  ['Wezen', 'ウェズン'],
+  ['Kaus', 'カウス'],
+  ['Australis', 'アウストラリス'],
+  ['Alkaid', 'アルカイド'],
+  ['Sargas', 'サルガス'],
+  ['Menkalinan', 'メンカリナン'],
+  ['Peacock', 'ピーコック'],
+  ['Alhena', 'アルヘナ'],
+  ['Atria', 'アトリア'],
+  ['Alsephina', 'Alsephina'],
+  ['Avior', 'アヴィオール'],
+  ['Murzim', 'ミルザム'],
+  ['Alphard', 'アルファルド'],
+  ['Hamal', 'ハマル'],
+  ['Diphda', 'ディフダ'],
+  ['Polaris', 'ポラリス（現在の北極星）'],
+  ['Menkent', 'メンケント'],
+  ['Mirach', 'ミラク'],
+  ['Saiph', 'サイフ'],
+  ['Alpheratz', 'アルフェラッツ'],
+  ['Nunki', 'ヌンキ'],
+  ['Rasalhague', 'ラス・アルハゲ'],
+  ['Kochab', 'コカブ'],
+  ['Almach', 'アルマク'],
+  ['Tiaki', 'Tiaki'],
+  ['Algol', 'アルゴル'],
+  ['Denebola', 'デネボラ'],
+  ['Muhlifain', 'ムリファイン'],
+  ['Suhail', 'スハイル'],
+  ['Etamin', 'エルタニン'],
+  ['Schedar', 'シェダル'],
+  ['Sadr', 'サドル'],
+  ['Alphecca', 'アルフェッカ'],
+  ['Naos', 'ナオス'],
+  ['Aspidiske', 'アスピディスケ'],
+  ['Mizar', 'ミザール'],
+  ['Caph', 'カフ'],
+  ['Larawag', 'Larawag'],
+  ['Dschubba', 'ジュバ'],
+  ['Merak', 'メラク'],
+  ['Algieba', 'アルギエバ'],
+  ['Ankaa', 'アンカア'],
+  ['Girtab', 'ギルタブ'],
+  ['Izar', 'イザール'],
+  ['Enif', 'エニフ'],
+  ['Mintaka', 'ミンタカ'],
+  ['Scheat', 'シェアト'],
+  ['Sabik', 'サビク'],
+  ['Phecda', 'フェクダ'],
+  ['Aludra', 'アルドラ'],
+  ['Alderamin', 'アルデラミン'],
+  ['Adhara', 'アダラ'],
+  ['Markab', 'マルカブ'],
+  ['Aljanah', 'アルジェナー'],
+  ['Markab', 'マルカブ'],
+  ['Nebula', '星雲'],
+  ['Pleiades', 'プレアデス星団']
+])
+
+const greek = new Map([
+  ['Alpha', 'アルファ星'],
+  ['Beta', 'ベータ星'],
+  ['Gamma', 'ガンマ星'],
+  ['Delta', 'デルタ星'],
+  ['Epsilon', 'イプシロン星'],
+  ['Zeta', 'ジータ星'],
+  ['Eta', 'イータ星'],
+  ['Theta', 'シータ星'],
+  ['Iota', 'イオタ星'],
+  ['Kappa', 'カッパ星'],
+  ['Lambda', 'ラムダ星'],
+  ['Mu', 'ミュー星'],
+  ['Nu', 'ニュー星'],
+  ['Xi', 'クシー星'],
+  ['Omicron', 'オミクロン星'],
+  ['Pi', 'パイ星'],
+  ['Rho', 'ロー星'],
+  ['Sigma', 'シグマ星'],
+  ['Tau', 'タウ星'],
+  ['Upsilon', 'ウプシロン星'],
+  ['Phi', 'ファイ星'],
+  ['Chi', 'カイ星'],
+  ['Psi', 'プサイ星'],
+  ['Omega', 'オメガ星']
+])
+
+const constellationGenitive = new Map([
+  ['Andromedae', 'Andromeda'],
+  ['Antliae', 'Antlia'],
+  ['Apodis', 'Apus'],
+  ['Aquarii', 'Aquarius'],
+  ['Aquilae', 'Aquila'],
+  ['Arae', 'Ara'],
+  ['Arietis', 'Aries'],
+  ['Aurigae', 'Auriga'],
+  ['Boötis', 'Boötes'],
+  ['Caeli', 'Caelum'],
+  ['Camelopardalis', 'Camelopardalis'],
+  ['Cancri', 'Cancer'],
+  ['Canum Venaticorum', 'Canes Venatici'],
+  ['Canis Majoris', 'Canis Major'],
+  ['Canis Minoris', 'Canis Minor'],
+  ['Capricorni', 'Capricornus'],
+  ['Carinae', 'Carina'],
+  ['Cassiopeiae', 'Cassiopeia'],
+  ['Centauri', 'Centaurus'],
+  ['Cephei', 'Cepheus'],
+  ['Ceti', 'Cetus'],
+  ['Chamaeleontis', 'Chamaeleon'],
+  ['Circini', 'Circinus'],
+  ['Columbae', 'Columba'],
+  ['Comae Berenices', 'Coma Berenices'],
+  ['Coronae Australis', 'Corona Australis'],
+  ['Coronae Borealis', 'Corona Borealis'],
+  ['Corvi', 'Corvus'],
+  ['Crateris', 'Crater'],
+  ['Crucis', 'Crux'],
+  ['Cygni', 'Cygnus'],
+  ['Delphini', 'Delphinus'],
+  ['Doradus', 'Dorado'],
+  ['Draconis', 'Draco'],
+  ['Equulei', 'Equuleus'],
+  ['Eridani', 'Eridanus'],
+  ['Fornacis', 'Fornax'],
+  ['Geminorum', 'Gemini'],
+  ['Gruis', 'Grus'],
+  ['Herculis', 'Hercules'],
+  ['Horologii', 'Horologium'],
+  ['Hydrae', 'Hydra'],
+  ['Hydri', 'Hydrus'],
+  ['Indi', 'Indus'],
+  ['Lacertae', 'Lacerta'],
+  ['Leonis', 'Leo'],
+  ['Leonis Minoris', 'Leo Minor'],
+  ['Leporis', 'Lepus'],
+  ['Librae', 'Libra'],
+  ['Lupi', 'Lupus'],
+  ['Lyncis', 'Lynx'],
+  ['Lyrae', 'Lyra'],
+  ['Mensae', 'Mensa'],
+  ['Microscopii', 'Microscopium'],
+  ['Monocerotis', 'Monoceros'],
+  ['Muscae', 'Musca'],
+  ['Normae', 'Norma'],
+  ['Octantis', 'Octans'],
+  ['Ophiuchi', 'Ophiuchus'],
+  ['Orionis', 'Orion'],
+  ['Pavonis', 'Pavo'],
+  ['Pegasi', 'Pegasus'],
+  ['Persei', 'Perseus'],
+  ['Phoenicis', 'Phoenix'],
+  ['Pictoris', 'Pictor'],
+  ['Piscium', 'Pisces'],
+  ['Piscis Austrini', 'Piscis Austrinus'],
+  ['Puppis', 'Puppis'],
+  ['Pyxidis', 'Pyxis'],
+  ['Reticuli', 'Reticulum'],
+  ['Sagittae', 'Sagitta'],
+  ['Sagittarii', 'Sagittarius'],
+  ['Scorpii', 'Scorpius'],
+  ['Sculptoris', 'Sculptor'],
+  ['Scuti', 'Scutum'],
+  ['Serpentis', 'Serpens'],
+  ['Sextantis', 'Sextans'],
+  ['Tauri', 'Taurus'],
+  ['Telescopii', 'Telescopium'],
+  ['Trianguli', 'Triangulum'],
+  ['Trianguli Australis', 'Triangulum Australe'],
+  ['Tucanae', 'Tucana'],
+  ['Ursae Majoris', 'Ursa Major'],
+  ['Ursae Minoris', 'Ursa Minor'],
+  ['Velorum', 'Vela'],
+  ['Virginis', 'Virgo'],
+  ['Volantis', 'Volans'],
+  ['Vulpeculae', 'Vulpecula']
+])
+
+const constellation = new Map([
+  ['Andromeda', 'アンドロメダ座'],
+  ['Monoceros', 'いっかくじゅう座'],
+  ['Sagittarius', 'いて座'],
+  ['Delphinus', 'いるか座'],
+  ['Indus', 'インディアン座'],
+  ['Pisces', 'うお座'],
+  ['Lepus', 'うさぎ座'],
+  ['Boötes', 'うしかい座'],
+  ['Hydra', 'うみへび座'],
+  ['Eridanus', 'エリダヌス座'],
+  ['Taurus', 'おうし座'],
+  ['Canis Major', 'おおいぬ座'],
+  ['Lupus', 'おおかみ座'],
+  ['Ursa Major', 'おおぐま座'],
+  ['Virgo', 'おとめ座'],
+  ['Aries', 'おひつじ座'],
+  ['Orion', 'オリオン座'],
+  ['Pictor', 'がか座'],
+  ['Cassiopeia', 'カシオペヤ座'],
+  ['Dorado', 'かじき座'],
+  ['Cancer', 'かに座'],
+  ['Coma Berenices', 'かみのけ座'],
+  ['Chamaeleon', 'カメレオン座'],
+  ['Corvus', 'からす座'],
+  ['Corona Borealis', 'かんむり座'],
+  ['Tucana', 'きょしちょう座'],
+  ['Auriga', 'ぎょしゃ座'],
+  ['Camelopardalis', 'きりん座'],
+  ['Pavo', 'くじゃく座'],
+  ['Cetus', 'くじら座'],
+  ['Cepheus', 'ケフェウス座'],
+  ['Centaurus', 'ケンタウルス座'],
+  ['Microscopium', 'けんびきょう座'],
+  ['Canis Minor', 'こいぬ座'],
+  ['Equuleus', 'こうま座'],
+  ['Vulpecula', 'こぎつね座'],
+  ['Ursa Minor', 'こぐま座'],
+  ['Leo Minor', 'こじし座'],
+  ['Crater', 'コップ座'],
+  ['Lyra', 'こと座'],
+  ['Circinus', 'コンパス座'],
+  ['Ara', 'さいだん座'],
+  ['Scorpius', 'さそり座'],
+  ['Triangulum', 'さんかく座'],
+  ['Leo', 'しし座'],
+  ['Norma', 'じょうぎ座'],
+  ['Scutum', 'たて座'],
+  ['Caelum', 'ちょうこくぐ座'],
+  ['Sculptor', 'ちょうこくしつ座'],
+  ['Grus', 'つる座'],
+  ['Mensa', 'テーブルさん座'],
+  ['Libra', 'てんびん座'],
+  ['Lacerta', 'とかげ座'],
+  ['Horologium', 'とけい座'],
+  ['Volans', 'とびうお座'],
+  ['Puppis', 'とも座'],
+  ['Musca', 'はえ座'],
+  ['Cygnus', 'はくちょう座'],
+  ['Octans', 'はちぶんぎ座'],
+  ['Columba', 'はと座'],
+  ['Apus', 'ふうちょう座'],
+  ['Gemini', 'ふたご座'],
+  ['Pegasus', 'ペガスス座'],
+  ['Serpens', 'へび座'],
+  ['Ophiuchus', 'へびつかい座'],
+  ['Hercules', 'ヘルクレス座'],
+  ['Perseus', 'ペルセウス座'],
+  ['Vela', 'ほ座'],
+  ['Telescopium', 'ぼうえんきょう座'],
+  ['Phoenix', 'ほうおう座'],
+  ['Antlia', 'ポンプ座'],
+  ['Aquarius', 'みずがめ座'],
+  ['Hydrus', 'みずへび座'],
+  ['Crux', 'みなみじゅうじ座'],
+  ['Piscis Austrinus', 'みなみのうお座'],
+  ['Corona Australis', 'みなみのかんむり座'],
+  ['Triangulum Australe', 'みなみのさんかく座'],
+  ['Sagitta', 'や座'],
+  ['Capricornus', 'やぎ座'],
+  ['Lynx', 'やまねこ座'],
+  ['Pyxis', 'らしんばん座'],
+  ['Draco', 'りゅう座'],
+  ['Carina', 'りゅうこつ座'],
+  ['Canes Venatici', 'りょうけん座'],
+  ['Reticulum', 'レチクル座'],
+  ['Fornax', 'ろ座'],
+  ['Sextans', 'ろくぶんぎ座'],
+  ['Aquila', 'わし座']
+])
 
 export default {
   data: function () {
@@ -101,7 +385,18 @@ export default {
       return this.$store.state.stel && this.$store.state.stel.selection ? this.$store.state.stel.selection : undefined
     },
     title: function () {
-      return this.selectedObject ? this.otherNames[0] : 'Selection'
+      let title = this.selectedObject ? this.otherNames[0] : 'Selection'
+      title = fullWordTranslation.get(title) || title
+      let array = title.split(' ').map(str => greek.get(str) || str)
+      if (array[0].indexOf('星') !== -1) {
+        let constella = array.slice(1).join(' ')
+        constella = constellationGenitive.get(constella) || constella
+        constella = constellation.get(constella) || constella
+        array = constella.split(' ').concat(array[0])
+      }
+      title = array.map(str => translation.get(str) || constellationGenitive.get(str) || str)
+        .map(str => constellation.get(str) || str).join(' ')
+      return title
     },
     otherNames: function () {
       return this.selectedObject ? swh.namesForSkySource(this.selectedObject, 26) : undefined
@@ -177,11 +472,14 @@ export default {
       var that = this
       that.items = that.computeItems()
       if (that.timer) clearInterval(that.timer)
-      that.timer = setInterval(() => { that.items = that.computeItems() }, 1000)
+      that.timer = setInterval(() => {
+        that.items = that.computeItems()
+      }, 1000)
 
       swh.getSkySourceSummaryFromWikipedia(s).then(data => {
         that.wikipediaData = data
-      }, reason => { })
+      }, reason => {
+      })
     },
     stelSelectionId: function (s) {
       if (!this.$stel.core.selection) {
@@ -191,7 +489,7 @@ export default {
       swh.sweObj2SkySource(this.$stel.core.selection).then(res => {
         this.$store.commit('setSelectedObject', res)
       }, err => {
-        console.log("Couldn't find info for object " + s + ':' + err)
+        console.log('Couldn\'t find info for object ' + s + ':' + err)
         this.$store.commit('setSelectedObject', 0)
       })
     },
@@ -200,6 +498,7 @@ export default {
     }
   },
   methods: {
+    /** memo: 座標の計算などを行う */
     computeItems: function () {
       const obj = this.$stel.core.selection
       if (!obj) return []
@@ -236,7 +535,7 @@ export default {
           const dimy = this.selectedObject.model_data.dimy ? this.selectedObject.model_data.dimy : this.selectedObject.model_data.dimx
           ret.push({
             key: that.$t('Size'),
-            value: this.selectedObject.model_data.dimx.toString() + "' x " + dimy.toString() + "'"
+            value: this.selectedObject.model_data.dimx.toString() + '\' x ' + dimy.toString() + '\''
           })
         }
       }
@@ -333,13 +632,17 @@ export default {
       const currentFov = this.$store.state.stel.fov * 180 / Math.PI
       this.$stel.zoomTo(currentFov * 0.3 * Math.PI / 180, 0.4)
       const that = this
-      this.zoomTimeout = setTimeout(_ => { that.zoomInButtonClicked() }, 300)
+      this.zoomTimeout = setTimeout(_ => {
+        that.zoomInButtonClicked()
+      }, 300)
     },
     zoomOutButtonClicked: function () {
       const currentFov = this.$store.state.stel.fov * 180 / Math.PI
       this.$stel.zoomTo(currentFov * 3 * Math.PI / 180, 0.6)
       const that = this
-      this.zoomTimeout = setTimeout(_ => { that.zoomOutButtonClicked() }, 200)
+      this.zoomTimeout = setTimeout(_ => {
+        that.zoomOutButtonClicked()
+      }, 200)
     },
     stopZoom: function () {
       if (this.zoomTimeout) {

@@ -69,14 +69,6 @@
                 :toggled="$store.state.stel.dsos.visible"
                 @clicked="(b) => { $stel.core.dsos.visible = b }">
     </bottom-button>
-    <bottom-button :label="$t('Night Mode')"
-                v-if="$store.state.showNightmodeButton !== false"
-                :img="require('@/assets/images/btn-night-mode.svg')"
-                img_alt="Night Mode Button"
-                class="mr-auto"
-                :toggled="$store.state.nightmode"
-                @clicked="(b) => { setNightMode(b) }">
-    </bottom-button>
     <bottom-button :label="$t('Fullscreen')"
                 :img="fullscreenBtnImage"
                 img_alt="Fullscreen Button"

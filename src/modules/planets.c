@@ -1049,6 +1049,7 @@ static void planet_render_label(
     char buf[256];
     snprintf(buf, sizeof(buf), "NAME %s", planet->name);
     name = skycultures_get_label(buf, buf, sizeof(buf));
+    // TODO: change planet name to Japanese
     if (!name)
         name = sys_translate("sky", planet->name);
 
