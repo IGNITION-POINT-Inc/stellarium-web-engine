@@ -1051,7 +1051,7 @@ static void planet_render_label(
     name = skycultures_get_label(buf, buf, sizeof(buf));
     // TODO: change planet name to Japanese
     if (!name)
-        name = sys_translate("sky", planet->name);
+        name = translate_jp(planet->name);
 
     planet_get_pvo(planet, painter->obs, pvo);
     vec3_copy(pvo[0], pos);

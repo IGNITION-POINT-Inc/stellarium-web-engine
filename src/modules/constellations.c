@@ -843,6 +843,7 @@ static int render_label(constellation_t *con, const painter_t *painter_,
     if (!res) {
         snprintf(label, sizeof(label), "%s", con->info.id);
     }
+    name = translate_jp(label);
 
     max_label_len = u8_split_line(label, sizeof(label), label, 15);
 
@@ -857,7 +858,7 @@ static int render_label(constellation_t *con, const painter_t *painter_,
     labels_add_3d(label, FRAME_ICRF,
                   con->lines.cap, true, 0, FONT_SIZE_BASE,
                   names_color, 0, ALIGN_CENTER | ALIGN_MIDDLE,
-                  TEXT_UPPERCASE | TEXT_SPACED | (selected ? TEXT_BOLD : 0) |
+                  TEXT_UPPERCASE | TEXT_SPACED | (selected ? TEXT_BOLD : TEXT_BOLD) |
                   TEXT_MULTILINES,
                   0, &con->obj);
 

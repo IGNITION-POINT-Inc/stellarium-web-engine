@@ -318,6 +318,7 @@ static void star_render_name(const painter_t *painter, const star_t *s,
     const bool selected = (&s->obj == core->selection);
     int effects = TEXT_FLOAT;
     char buf[128];
+    const char *name;
     const double hints_mag_offset = g_stars->hints_mag_offset +
                                     core_get_hints_mag_offset(win_pos);
     int flags = DSGN_TRANSLATE;
@@ -359,6 +360,7 @@ static void star_render_name(const painter_t *painter, const star_t *s,
     }
 
     if (!buf[0]) return;
+    name = translate_jp(buf)
 
     if (selected) {
         vec4_copy(white, label_color);
@@ -366,8 +368,8 @@ static void star_render_name(const painter_t *painter, const star_t *s,
     }
     radius += LABEL_SPACING;
 
-    u8_split_line(buf, sizeof(buf), buf, 16);
-    labels_add_3d(buf, frame, pos, true,
+    u8_split_line(name, sizeof(name), buf, 16);
+    labels_add_3d(name, frame, pos, true,
                  radius, FONT_SIZE_BASE, label_color, 0, 0,
                  effects | TEXT_MULTILINES, -s->vmag, &s->obj);
 }

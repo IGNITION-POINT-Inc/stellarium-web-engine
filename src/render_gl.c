@@ -1058,8 +1058,8 @@ static void text_using_nanovg(renderer_t *rend,
     char buf[128];
 
     if (strlen(text) >= sizeof(item->text.text)) {
-        LOG_W("Text too large: %s", text);
-        return;
+        // LOG_W("Text too large: %s", text);
+        // return;
     }
 
     if (!bounds) {

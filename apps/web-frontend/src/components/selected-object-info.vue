@@ -45,11 +45,17 @@ import swh from '@/assets/sw_helpers.js'
 
 const fullWordTranslation = new Map([
   ['Small Magellanic Cloud', '小マゼラン雲'],
-  ['47 Tuc', 'きょしちょう座47']
+  ['47 Tuc', 'きょしちょう座47'],
+  ['Piscis Austrinus', 'みなみのうお座'],
+  ['Corona Australis', 'みなみのかんむり座'],
+  ['Triangulum Australe', 'みなみのさんかく座'],
+  ['Canes Venatici', 'りょうけん座'],
+  ['Ursa Minor', 'こぐま座'],
+  ['Leo Minor', 'こじし座']
 ])
 
 const translation = new Map([
-  ['Sum', '太陽'],
+  ['Sun', '太陽'],
   ['Moon', '月'],
   ['Mercury', '水星'],
   ['Venus', '金星'],
@@ -283,7 +289,7 @@ const constellation = new Map([
   ['Indus', 'インディアン座'],
   ['Pisces', 'うお座'],
   ['Lepus', 'うさぎ座'],
-  ['Boötes', 'うしかい座'],
+  ['Bootes', 'うしかい座'],
   ['Hydra', 'うみへび座'],
   ['Eridanus', 'エリダヌス座'],
   ['Taurus', 'おうし座'],
@@ -312,8 +318,6 @@ const constellation = new Map([
   ['Canis Minor', 'こいぬ座'],
   ['Equuleus', 'こうま座'],
   ['Vulpecula', 'こぎつね座'],
-  ['Ursa Minor', 'こぐま座'],
-  ['Leo Minor', 'こじし座'],
   ['Crater', 'コップ座'],
   ['Lyra', 'こと座'],
   ['Circinus', 'コンパス座'],
@@ -350,16 +354,12 @@ const constellation = new Map([
   ['Aquarius', 'みずがめ座'],
   ['Hydrus', 'みずへび座'],
   ['Crux', 'みなみじゅうじ座'],
-  ['Piscis Austrinus', 'みなみのうお座'],
-  ['Corona Australis', 'みなみのかんむり座'],
-  ['Triangulum Australe', 'みなみのさんかく座'],
   ['Sagitta', 'や座'],
   ['Capricornus', 'やぎ座'],
   ['Lynx', 'やまねこ座'],
   ['Pyxis', 'らしんばん座'],
   ['Draco', 'りゅう座'],
   ['Carina', 'りゅうこつ座'],
-  ['Canes Venatici', 'りょうけん座'],
   ['Reticulum', 'レチクル座'],
   ['Fornax', 'ろ座'],
   ['Sextans', 'ろくぶんぎ座'],

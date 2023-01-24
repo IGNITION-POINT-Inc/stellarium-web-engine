@@ -87,6 +87,8 @@ int sys_get_position(double *lat, double *lon, double *alt, double *accuracy);
  */
 const char *sys_translate(const char *domain, const char *str);
 
+const char *translate_jp(const char *str);
+
 /*
  * Function: sys_get_lang
  * Get the code of the best supported language to use.

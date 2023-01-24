@@ -307,8 +307,6 @@ const swh = {
   sweObj2SkySource: function (obj) {
     const names = obj.designations()
     const that = this
-    console.log(names)
-    console.log('aaaaaaaaaaaaaaaa')
 
     if (!names || !names.length) {
       throw new Error("Can't find object without names")
