@@ -103,7 +103,7 @@ char translation[][2][64] = {
   {"Aquarius", "みずがめ座"},
   {"Hydrus", "みずへび座"},
   {"Crux", "みなみじゅうじ座"},
-  {"iscis \nAustrinus", "みなみのうお座"},
+  {"Piscis \nAustrinus", "みなみのうお座"},
   {"Corona \nAustralis", "みなみのかんむり座"},
   {"Triangulum \nAustrale", "みなみのさんかく座"},
   {"Sagitta", "や座"},
