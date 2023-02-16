@@ -360,7 +360,7 @@ static void star_render_name(const painter_t *painter, const star_t *s,
     }
 
     if (!buf[0]) return;
-    name = translate_jp(buf)
+    name = translate_jp(buf);
 
     if (selected) {
         vec4_copy(white, label_color);
@@ -368,10 +368,11 @@ static void star_render_name(const painter_t *painter, const star_t *s,
     }
     radius += LABEL_SPACING;
 
-    u8_split_line(name, sizeof(name), buf, 16);
+    // u8_split_line(name, sizeof(name), buf, 16);
+
     labels_add_3d(name, frame, pos, true,
                  radius, FONT_SIZE_BASE, label_color, 0, 0,
-                 effects | TEXT_MULTILINES, -s->vmag, &s->obj);
+                 effects | TEXT_MULTILINES | TEXT_BOLD, -s->vmag, &s->obj);
 }
 
 // Render a single star.
@@ -1014,3 +1015,4 @@ static void test_create_from_json(void)
 TEST_REGISTER(NULL, test_create_from_json, TEST_AUTO);
 
 #endif
+

@@ -300,13 +300,6 @@ const char *sys_translate(const char *domain, const char *str)
     assert(strcmp(domain, "gui") == 0 ||
            strcmp(domain, "sky") == 0 ||
            strcmp(domain, "skyculture") == 0);
-    // TODO: translate
-    int i;
-    for (i = 0; i<sizeof(translation); i++) {
-      if (strcmp(str, translation[i][0]) == 0) {
-        return translation[i][1];
-      }
-    }
     if (!sys_callbacks.translate) return str;
     return sys_callbacks.translate(sys_callbacks.user, domain, str);
 }
@@ -354,3 +347,4 @@ void sys_set_translate_function(
 {
     sys_callbacks.translate = callback;
 }
+

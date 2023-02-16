@@ -2088,9 +2088,10 @@ void core_add_font(renderer_t *rend, const char *name,
 
 static void set_default_fonts(renderer_t *rend)
 {
-    core_add_font(rend, "regular", "asset://font/NotoSans-Regular.ttf",
+    core_add_font(rend, "regular", "/stellarium/fonts/Roboto-Regular.ttf",
                   NULL, 0);
-    core_add_font(rend, "bold", "asset://font/NotoSans-Bold.ttf",
+    // core_add_font(rend, "bold", "asset://font/NotoSans-Bold.woff",
+    core_add_font(rend, "bold", "/stellarium/fonts/Roboto-Bold.ttf",
                   NULL, 0);
     rend->fonts[FONT_REGULAR].is_default_font = true;
     rend->fonts[FONT_BOLD].is_default_font = true;

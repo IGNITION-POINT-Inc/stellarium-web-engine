@@ -827,6 +827,7 @@ static int render_label(constellation_t *con, const painter_t *painter_,
     double names_color[4];
     char label[256];
     const char* res;
+    const char* name;
     constellations_t *cons = (constellations_t*)con->obj.parent;
     int max_label_len;
 
@@ -843,6 +844,7 @@ static int render_label(constellation_t *con, const painter_t *painter_,
     if (!res) {
         snprintf(label, sizeof(label), "%s", con->info.id);
     }
+
     name = translate_jp(label);
 
     max_label_len = u8_split_line(label, sizeof(label), label, 15);
@@ -855,7 +857,7 @@ static int render_label(constellation_t *con, const painter_t *painter_,
     else
         vec4_set(names_color, 1.0, 1.0, 1.0, 1.0);
 
-    labels_add_3d(label, FRAME_ICRF,
+    labels_add_3d(name, FRAME_ICRF,
                   con->lines.cap, true, 0, FONT_SIZE_BASE,
                   names_color, 0, ALIGN_CENTER | ALIGN_MIDDLE,
                   TEXT_UPPERCASE | TEXT_SPACED | (selected ? TEXT_BOLD : TEXT_BOLD) |
@@ -1086,3 +1088,4 @@ static obj_klass_t constellations_klass = {
     },
 };
 OBJ_REGISTER(constellations_klass);
+

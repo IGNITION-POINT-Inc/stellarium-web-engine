@@ -233,6 +233,7 @@ void labels_add_3d(const char *text, int frame, const double pos[3],
     label_t *label;
 
     if (!text || !*text) return;
+    // LOG_W("text %s", text);
 
     label = label_get(g_labels->labels, text, size, obj);
     if (!label) {
@@ -242,7 +243,7 @@ void labels_add_3d(const char *text, int frame, const double pos[3],
         label->render_text = label->text = strdup(text);
         DL_APPEND(g_labels->labels, label);
     }
-
+    // LOG_W("label %s", label);
     if (frame == -1)
         vec2_copy(pos, label->win_pos);
     else {
