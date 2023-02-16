@@ -183,4 +183,8 @@ export default {
 @import "../assets/scss/hoshizoraConfig";
 @import "../assets/scss/commons/hoshizoraHeader";
 
+ul {
+  list-style: none;
+}
+
 </style>
