@@ -11,8 +11,6 @@
         <div class="bg" @click="modalMenuClose()"></div>
         <div class="modal-container">
           <ul class="navis-modal">
-            <li class="bt" @click="modalMenuClose()"><a href="#"></a><span class="txt">星空を見る</span><span
-              class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span></li>
             <li class="bt" @click="modalMenuClose()"><a href="/sketch"></a>
                 <span class="txt">星空スケッチ</span><span class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span>
             </li>
@@ -23,7 +21,16 @@
               <a href="/story"></a>
                 <span class="txt">星空ストーリー</span><span class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span>
             </li>
+            <li class="bt" @click="modalMenuClose()"><a href="#"></a><span class="txt">星空プラネタリウム</span><span
+              class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span></li>
           </ul>
+          <div>
+            <v-row align-content="center" class="mt-3">
+              <v-col align="center">
+                <button @click="toggleStoreValue()">© データクレジット</button>
+              </v-col>
+            </v-row>
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +42,6 @@ import Util from '@/plugins/util'
 import { TweenMax, Expo } from 'gsap'
 
 export default {
-  components: {},
   data () {
     return {
       stageW: 0,
@@ -63,6 +69,9 @@ export default {
       })
 
       this.addAc()
+    },
+    toggleStoreValue: function () {
+      this.$store.commit('toggleBool', 'showDataCreditsDialog')
     },
     addAc () {
       window.addEventListener('resize', this.resizeEv)

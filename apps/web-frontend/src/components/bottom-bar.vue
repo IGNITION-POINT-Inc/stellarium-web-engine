@@ -62,20 +62,6 @@
                 :toggled="$store.state.stel.lines.equatorial.visible"
                 @clicked="(b) => { $stel.core.lines.equatorial.visible = b }">
     </bottom-button>
-    <bottom-button :label="$t('Deep Sky Objects')"
-                :img="require('@/assets/images/btn-nebulae.svg')"
-                img_alt="Deep Sky Objects Button"
-                class="mr-auto"
-                :toggled="$store.state.stel.dsos.visible"
-                @clicked="(b) => { $stel.core.dsos.visible = b }">
-    </bottom-button>
-    <bottom-button :label="$t('Fullscreen')"
-                :img="fullscreenBtnImage"
-                img_alt="Fullscreen Button"
-                class="mr-auto hidden-xs-only"
-                :toggled="$store.state.fullscreen"
-                @clicked="(b) => { setFullscreen(b) }">
-    </bottom-button>
 
     <v-spacer></v-spacer>
 
