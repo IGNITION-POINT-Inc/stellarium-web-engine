@@ -1,6 +1,6 @@
 <template>
   <div class="Header" ref="contents">
-    <div class="container">
+    <div class="container ma-0 pa-0">
       <p class="logo">
         <a href="/home"></a>
         <img src="@/assets/images/common/logo.svg" alt=""/>
@@ -11,6 +11,8 @@
         <div class="bg" @click="modalMenuClose()"></div>
         <div class="modal-container">
           <ul class="navis-modal">
+            <li class="bt" @click="modalMenuClose()"><a href="#"></a><span class="txt">星空プラネタリウム</span><span
+              class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span></li>
             <li class="bt" @click="modalMenuClose()"><a href="/sketch"></a>
                 <span class="txt">星空スケッチ</span><span class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span>
             </li>
@@ -21,8 +23,6 @@
               <a href="/story"></a>
                 <span class="txt">星空ストーリー</span><span class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span>
             </li>
-            <li class="bt" @click="modalMenuClose()"><a href="#"></a><span class="txt">星空プラネタリウム</span><span
-              class="arw"><img src="@/assets/images/common/arw.svg" alt=""/></span></li>
           </ul>
           <div>
             <v-row align-content="center" class="mt-3">

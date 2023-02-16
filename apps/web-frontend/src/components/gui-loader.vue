@@ -13,7 +13,6 @@
       <HoshizoraHeader></HoshizoraHeader>
       <v-row align-content="center" style="height: 500px">
         <v-col align="center">
-          星空プラネタリウム ロード中
           <v-progress-circular indeterminate class="mx-3"></v-progress-circular>
         </v-col>
       </v-row>
