@@ -7,7 +7,6 @@
 // repository.
 
 <template>
-
 <v-app>
   <v-navigation-drawer v-model="nav" app stateless width="300">
     <v-layout column fill-height>
@@ -70,7 +69,7 @@
 </template>
 
 <script>
-
+/* eslint-disable */
 import _ from 'lodash'
 import Gui from '@/components/gui.vue'
 import GuiLoader from '@/components/gui-loader.vue'
@@ -93,6 +92,11 @@ export default {
       startTimeIsSet: false,
       initDone: false,
       dataSourceInitDone: false
+    }
+  },
+  beforeDestroy () {
+    if ('DeviceOrientationEvent' in window) {
+      window.removeEventListener('deviceorientation', this.handleOrientation)
     }
   },
   components: { HoshizoraHeader, Gui, GuiLoader },
@@ -231,15 +235,17 @@ export default {
       try {
         swh.initStelWebEngine(that.$store, f.default, that.$refs.stelCanvas, function () {
           // Start auto location detection (even if we don't use it)
+
           swh.getGeolocation().then(p => swh.geoCodePosition(p, that)).then((loc) => {
             that.$store.commit('setAutoDetectedLocation', loc)
           }, (error) => { console.log(error) })
+
 
           that.$stel.setFont('regular', process.env.BASE_URL + 'fonts/Roboto-Regular.ttf', 1.38)
           that.$stel.setFont('bold', process.env.BASE_URL + 'fonts/Roboto-Bold.ttf', 1.38)
           that.$stel.core.constellations.show_only_pointed = false
 
-          that.setStateFromQueryArgs()
+          //that.setStateFromQueryArgs()
           that.guiComponent = 'Gui'
           for (const i in that.$stellariumWebPlugins()) {
             const plugin = that.$stellariumWebPlugins()[i]

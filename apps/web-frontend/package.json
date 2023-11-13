@@ -17,6 +17,7 @@
     "leaflet": "^1.7.1",
     "leaflet-control-geocoder": "^1.13.0",
     "moment": "^2.29.4",
+    "npm": "^10.2.3",
     "roboto-fontface": "*",
     "v-click-outside": "^3.1.2",
     "vue": "^2.6.10",

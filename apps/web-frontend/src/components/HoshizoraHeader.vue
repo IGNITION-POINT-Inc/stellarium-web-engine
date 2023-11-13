@@ -2,9 +2,17 @@
   <div class="Header" ref="contents">
     <div class="container ma-0 pa-0">
       <p class="logo">
-        <a href="/home"></a>
+        <a @click="toggleAccelUse()"></a>
         <img src="@/assets/images/common/logo.svg" alt=""/>
       </p>
+      <div class="btn-container">
+        <button v-if="!$store.state.accelState" @click="onAccelUse()" class="image-btn">
+          <img src="@/assets/images/1_trans.png" alt="Description">
+        </button>
+        <button v-else @click="offAccelUse()" class="image-btn">
+          <img src="@/assets/images/2_notrans.png" alt="Description">
+        </button>
+      </div>
       <p class="menu" @click="modalMenuOpen()" :class="{'menu-open':this.modal}"><span
         class="line1"></span><span class="line2"></span></p>
       <div class="modal" :class="{'modal-open':this.modal}">
@@ -69,6 +77,12 @@ export default {
       })
 
       this.addAc()
+    },
+    onAccelUse: function () {
+      this.$store.dispatch('requestPermission')
+    },
+    offAccelUse: function () {
+      this.$store.dispatch('accelOff')
     },
     toggleStoreValue: function () {
       this.$store.commit('toggleBool', 'showDataCreditsDialog')
@@ -187,4 +201,27 @@ ul {
   list-style: none;
 }
 
+.btn-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: start;
+    margin-top: 10px;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.image-btn img {
+    display: block;
+    width: 100px; /* 任意の画像サイズに設定する */
+    height: auto;
+}
 </style>
