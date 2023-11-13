@@ -39,3 +39,22 @@ Contributing
 
 In order for your contribution to Stellarium Web Engine to be accepted, you have to sign the
 [Stellarium Web Contributor License Agreement (CLA)](doc/cla/sign-cla.md).
+
+## デプロイ方法
+cd stellarium-web-engine/apps/web-frontend
+yarn install
+yarn build
+mkdir dist/stellarium
+mv dist/* dist/stellarium
+
+aws s3 sync --exact-timestamps --delete dist/ \
+s3://bucket-name \
+--profile default \
+--region ap-northeast-1
+
+aws cloudfront create-invalidation \
+--distribution-id DIST-ID \
+--paths "/stellarium/*" \
+--profile default \
+--region ap-northeast-1
+
